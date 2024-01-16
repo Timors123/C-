@@ -2,31 +2,13 @@
     "tasks": [
         {
             "type": "cppbuild",
-            "label": "C/C++: gcc.exe 生成活动文件",
-            "command": "D:\\Profession\\TDM\\bin\\gcc.exe",
-            "args": [
-                "-fdiagnostics-color=always",
-                "-g",
-                "${file}",
-                "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
-            ],
-            "options": {
-                "cwd": "${fileDirname}"
-            },
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "group": "build",
-            "detail": "调试器生成的任务。"
-        },
-        {
-            "type": "cppbuild",
             "label": "C/C++: g++.exe 生成活动文件",
             "command": "D:\\Profession\\TDM\\bin\\g++.exe",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
+                // 所有指针变量在64位上为8字节,32位上为4字节,但不能混着用,因为不同类型指针的操作权限不同,如char*只操作一个字节
+                "-m64",
                 "${file}",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
