@@ -10,22 +10,46 @@ void func01(char *a)
     a[1] = 'F';
 }
 
-// [函数传 数组指针 参数]
-void func02(int (*a)[3])
+// ***[函数传 数组指针(二维数组) 参数]***  返回数组指针(二维数组)-->两种方法
+// 第一种 用typedef
+typedef int (*DP)[3];
+DP func020(DP a)
 {
     a[1][1] = 100;
+    return a;
+}
+// 第二种 写法奇怪
+int (*func021(int (*a)[3]))[3]
+{
+    a[1][1] = 100;
+    return a;
 }
 
-// [函数传 指针数组 参数](数组内为非数组)
-void func03(int **a)
+// [函数传 指针数组 参数](数组内为非数组) 返回指针数组-->int **类型
+int **func03(int **a)
 {
     *a[1] = 700;
+    return a;
 }
 
 // [函数传 指针数组 参数](数组内为数组)
 void func04(int **a)
 {
     a[3][0] = 900;
+}
+
+// 函数指针数组
+int max(int a, int b)
+{
+    return a > b ?: a, b;
+}
+int add(int a, int b)
+{
+    return a + b;
+}
+int sub(int a, int b)
+{
+    return a - b;
 }
 
 // 所有指针变量在64位上为8字节,32位上为4字节,但不能混着用,因为不同类型指针的操作权限不同,如char*只操作一个字节,只能位移一个字节
@@ -105,7 +129,7 @@ int main()
 
     // [指针数组] 是个数组,有自己本身的地址,指针数组的数组名实质是一个指向数组的二级指针(即指向 由多个指针组成的数组 的地址)
     int n1 = 100, n2 = 200, n3 = 300, k1[] = {111}, k2[] = {222}, k3[] = {333};
-    int *pn1 = &n1, *pn2 = &n2, *pn3 = &n3, *pk1 = k1, *pk2 = k2, *pk3 = k3;
+    int *pn1 = &n1, *pn2 = &n2, *pn3 = &n3, *pk1 = k1, *pk2 = k2, *pk3 = k3; // 完整写法
     int *nps[] = {
         pn1,
         pn2,
@@ -113,12 +137,12 @@ int main()
         pk1,
         pk2,
         pk3};
-    func03(nps); // 改n2
-    func04(nps); // 改k2[0]
+    int **npss = func03(nps); // 改n2 返回-->int**类型
+    func04(nps);              // 改k2[0]
     printf("指针数组====nps地址(数组自己的地址):%p ||首元素地址：%p || 首元素的值p1(n1的地址)：%p || n1地址：%p || n1的值:%d \n\n", &nps, nps, nps[0], &n1, *nps[0]);
     for (int i = 0; i < 3; i++)
     {
-        printf("n%d: %d\n", i + 1, *nps[i]);
+        printf("n%d: %d\n", i + 1, *npss[i]);
     }
     for (int i = 3; i < 6; i++)
     {
@@ -130,14 +154,56 @@ int main()
         {10, 11, 12},
         {20, 21, 22}};
     int(*pb)[3] = b;
-    func02(pb); // 改b[1][1]
+    int(*pbb)[3] = func020(pb); // 改b[1][1]
     printf("\n======二维数组======");
     for (int i = 0; i < 3; i++)
     {
         printf("\n");
         for (int j = 0; j < 3; j++)
         {
-            printf("[%d][%d] : %d ", i, j, *(*(pb + i) + j));
+            printf("[%d][%d] : %d ", i, j, *(*(pbb + i) + j));
         }
     }
+
+    // [函数指针] 函数也有自己的地址,使用三方库会用到
+    /*
+    形式:
+    1)声明:
+        int max(int a,int b){
+            ...
+        }
+        int(*p)(int,int);
+        p = max; // 完整
+
+    2)调用:
+        (*p)(20,30);  // 完整
+        p(20,30);     // 简写
+    */
+    int (*pf)(int, int) = max;
+
+    printf("\n\n[函数指针] === max : %d", pf(20, 30));
+
+    // [函数指针数组] 类似指针数组,数组内都是函数指针
+    /*
+    形式:
+    1)声明: 需要 返回类型 和 形参类型相同
+        int max(int a,int b){
+            ...
+        }
+        int add(int a,int b){
+            ...
+        }
+        int sub(int a,int b){
+            ...
+        }
+        int(*p[3])(int,int)={max,add,sub};
+
+    2)调用:
+        (*p[0])(20,30);  // 完整
+        p[0](20,30);     // 简写
+    */
+
+    int (*pfs[3])(int, int) = {max, add, sub};
+
+    printf("\n\n[函数指针数组] === max : %d || add : %d || sub : %d", pfs[0](20, 30), pfs[1](20, 30), (*(pfs + 2))(20, 30));
 }
