@@ -4,6 +4,11 @@
 
 #define MAX_NAME_LENGTH 50
 
+// 计算结构体大小时要对齐,取基本数据类型最长为单位,尽量多放,按长度倍数放(int 放入编号为4的倍数),基本数据类型不能被截断
+// 长度由编译器决定
+// 32位上 char:1 , short:2 , int:4 , long int:4 , long long:8 , float:4 , double:8  指针类型:4位
+// 64位上 char:1 , short:2 , int:4 , long int:8 , long long:8 , float:4 , double:8  指针类型:8位
+
 // struct可以写main外,也可写内部
 
 // 第二种 定义时创建 并初始化
@@ -23,8 +28,14 @@ typedef struct Address
     int code;
 } Address;
 
-int main()
+// main函数的参数来自控制命令行中 , argc为参数个数 , arg[0]为全路径名 , arg[1]为指向第一个参数的指针...arg[n]为空NULL时表示结尾
+
+// 第三个参数char *envp[] , 获取系统的环境变量,尽量避免使用,ISO C/ISO C++ ,POSIX 标准都不支持main第三个参数的定义形式
+// 如果要访问特定的环境变量，应该使用getenv 和putenv 函数
+int main(int argc, char *arg[])
 {
+    printf("文件全路径名: %s\n\n", arg[0]);
+
     // 第一种 定义后再创建 并初始化
     struct Person
     {

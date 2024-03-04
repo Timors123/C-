@@ -212,7 +212,9 @@ int main()
         p[0](20,30);     // 简写
     */
 
-    int (*pfs[3])(int, int) = {max, add, sub};
+    int (*pfs[])(int, int) = {max, add, sub};
 
     printf("\n\n[函数指针数组] === max : %d || add : %d || sub : %d", pfs[0](20, 30), pfs[1](20, 30), (*(pfs + 2))(20, 30));
+
+    // [指向函数指针数组的指针] 无用
 }
