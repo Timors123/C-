@@ -50,5 +50,4 @@ int *NumberOfDaffodils()
 
 int main()
 {
-    char (*(*x())[])();
 }
