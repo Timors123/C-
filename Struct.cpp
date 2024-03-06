@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "head.h"
 
 #define MAX_NAME_LENGTH 50
 
@@ -29,7 +27,6 @@ typedef struct Address
 } Address;
 
 // main函数的参数来自控制命令行中 , argc为参数个数 , arg[0]为全路径名 , arg[1]为指向第一个参数的指针...arg[n]为空NULL时表示结尾
-
 // 第三个参数char *envp[] , 获取系统的环境变量,尽量避免使用,ISO C/ISO C++ ,POSIX 标准都不支持main第三个参数的定义形式
 // 如果要访问特定的环境变量，应该使用getenv 和putenv 函数
 int main(int argc, char *arg[])
@@ -39,7 +36,7 @@ int main(int argc, char *arg[])
     // 第一种 定义后再创建 并初始化
     struct Person
     {
-        // char name[10];
+        // char name[100];
         const char *name;
         int age;
         Address address;

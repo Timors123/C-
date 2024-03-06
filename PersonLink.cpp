@@ -1,12 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "head.h"
 
 // 一个单链表
 
 // 指针判空
-int PointIsNULL(void *p)
-{
+int PointIsNULL(void* p) {
     // 指针为空,停止操作
     if (!p)
     {
@@ -19,13 +16,12 @@ typedef struct Person
 {
     char name[10];
     int age;
-    struct Person *next;
+    struct Person* next;
 } Person;
 
 // 创建节点
-Person *create(Person p)
-{
-    Person *pnew = (Person *)malloc(sizeof(Person));
+Person* create(Person p) {
+    Person* pnew = (Person*)malloc(sizeof(Person));
     if (!pnew)
         return NULL;
     strcpy(pnew->name, p.name);
@@ -36,11 +32,10 @@ Person *create(Person p)
 }
 
 // 尾插法
-void insertEnd(Person **head, Person p)
-{
+void insertEnd(Person** head, Person p) {
     if (!p.age)
         return;
-    Person *pnew = create(p);
+    Person* pnew = create(p);
     // 头指针为空,该节点为头指针
     if (!*head)
     {
@@ -48,7 +43,7 @@ void insertEnd(Person **head, Person p)
         return;
     }
 
-    Person *temp = *head;
+    Person* temp = *head;
     // 移动头节点
     while (temp->next)
         temp = temp->next;
@@ -57,11 +52,10 @@ void insertEnd(Person **head, Person p)
 }
 
 // 头插法
-void insertHead(Person **head, Person p)
-{
+void insertHead(Person** head, Person p) {
     if (!p.age)
         return;
-    Person *pnew = create(p);
+    Person* pnew = create(p);
     // 头指针为空,该节点为头指针
     if (!*head)
     {
@@ -75,15 +69,13 @@ void insertHead(Person **head, Person p)
 }
 
 // 批量插入,根据传入insertFunc不同,选择不同的添加方法
-void multInput(Person *people, Person **head, void (*insertFunc)(Person **head, Person p))
-{
+void multInput(Person* people, Person** head, void (*insertFunc)(Person** head, Person p)) {
     for (int i = 0; people[i].age; i++)
         insertFunc(head, people[i]);
 }
 
 // 在n之后插入(尾插法和头插法为其特殊情况)
-void nInsert(Person *people, Person **head, Person *nPerson, void (*FailureHandling)(Person **head, Person p))
-{
+void nInsert(Person* people, Person** head, Person* nPerson, void (*FailureHandling)(Person** head, Person p)) {
     // 头指针为空,使用头插法
     if (PointIsNULL(*head))
     {
@@ -104,7 +96,7 @@ void nInsert(Person *people, Person **head, Person *nPerson, void (*FailureHandl
         return;
     }
     // 正常情况
-    Person *pre = *head;
+    Person* pre = *head;
     while (pre)
     {
         if (!strcmp(pre->name, nPerson->name) && pre->age == nPerson->age)
@@ -116,8 +108,8 @@ void nInsert(Person *people, Person **head, Person *nPerson, void (*FailureHandl
         printf("(未匹配,插入失败)");
         return;
     }
-    Person *nextPerson = pre->next;
-    Person *p = NULL;
+    Person* nextPerson = pre->next;
+    Person* p = NULL;
     for (size_t i = 0; people[i].age > 0; i++)
     {
         p = create(people[i]);
@@ -128,13 +120,12 @@ void nInsert(Person *people, Person **head, Person *nPerson, void (*FailureHandl
 }
 
 // 删除 : 根据结构体删除
-void del(Person **head, Person p)
-{
+void del(Person** head, Person p) {
     // 头指针为空,停止操作
     if (PointIsNULL(*head))
         return;
     // 记录被删节点的前一个节点pre
-    Person *pre = NULL, *temp = *head;
+    Person* pre = NULL, * temp = *head;
     // 删除头节点
     if (temp->age == p.age && !strcmp(temp->name, p.name))
     {
@@ -161,15 +152,14 @@ void del(Person **head, Person p)
 要点注意 :  head 是一个指向头指针的指针。
           *head 解引用了这个指针,得到头指针本身,它直接指向链表的第一个节点。
 */
-void clear(Person **head)
-{
+void clear(Person** head) {
     // 头指针为空,停止操作
     if (PointIsNULL(*head))
         return;
-    Person *phead = *head;
+    Person* phead = *head;
     while (phead)
     {
-        Person *temp = phead;
+        Person* temp = phead;
         phead = phead->next;
         free(temp);
     }
@@ -177,8 +167,7 @@ void clear(Person **head)
     return;
 }
 // 删除n-m之间的节点
-void delnm(Person **head, Person *pn, Person *pm)
-{
+void delnm(Person** head, Person* pn, Person* pm) {
     // 判断头节点
     if (PointIsNULL(*head))
         return;
@@ -186,8 +175,8 @@ void delnm(Person **head, Person *pn, Person *pm)
     if (!pm && !pn)
         clear(head);
 
-    Person *pre = *head;
-    Person *next = *head;
+    Person* pre = *head;
+    Person* next = *head;
     // 寻找pn位置
     while (pre && !PointIsNULL(pn))
     {
@@ -203,8 +192,7 @@ void delnm(Person **head, Person *pn, Person *pm)
             if (!next->next)
                 break;
             next = next->next;
-        }
-        else
+        } else
         {
             if (!strcmp(next->name, pm->name) && next->age == pm->age)
                 break;
@@ -217,29 +205,28 @@ void delnm(Person **head, Person *pn, Person *pm)
     // 开始删除
     while (pre->next != next)
     {
-        Person *temp = pre->next;
+        Person* temp = pre->next;
         pre->next = temp->next;
         free(temp);
     }
     // 如果pm为空,删除pn之后所有节点,由于上述已经删除pn-尾节点之间节点,最后只需再删除尾节点
     if (PointIsNULL(pm))
     {
-        Person *temp = next;
+        Person* temp = next;
         pre->next = temp->next;
         free(temp);
     }
     // 如果pn为空,删除pm之前所有节点,由于上述已经删除头节点-pm之间节点,最后只需再删除头节点
     if (PointIsNULL(pn))
     {
-        Person *temp = *head;
+        Person* temp = *head;
         *head = temp->next;
         free(temp);
     }
 }
 
 // 输出链表
-void outPut(const char *desc, Person *head)
-{
+void outPut(const char* desc, Person* head) {
     printf("\n--- %s ---\n", desc);
     if (!head)
     {
@@ -253,18 +240,17 @@ void outPut(const char *desc, Person *head)
     }
 }
 
-int main()
-{
-    Person *head = NULL;
+int main() {
+    Person* head = NULL;
 
     // 注意参数insertFunc,需要传入方法地址,而不是方法调用后的返回值
-    Person multPeople[] = {{"m-p1", 11}, {"m-p2", 12}, {"m-p3", 13}, {"m-p4", 14}, {"", 0}};
+    Person multPeople[] = { {"m-p1", 11}, {"m-p2", 12}, {"m-p3", 13}, {"m-p4", 14}, {"", 0} };
     multInput(multPeople, &head, &insertEnd);
     outPut("批量插入", head);
 
     // n后插入(示例m-p1)( &nPerson==NULL头插法 ; nPerson.age<0尾插法 )
-    Person nPeople[] = {{"n-p1", 111}, {"n-p2", 112}, {"n-p3", 113}, {"n-p4", 114}, {"", 0}};
-    Person p1 = {"m-p1", 11};
+    Person nPeople[] = { {"n-p1", 111}, {"n-p2", 112}, {"n-p3", 113}, {"n-p4", 114}, {"", 0} };
+    Person p1 = { "m-p1", 11 };
     nInsert(nPeople, &head, &p1, NULL);
     outPut("n后插入(示例m-p1)", head);
 
@@ -273,8 +259,8 @@ int main()
     outPut("删除(示例m-p1)", head);
 
     // 删除pn-pm之间的节点
-    Person pn = {"n-p3", 113};
-    Person pm = {"m-p3", 13};
+    Person pn = { "n-p3", 113 };
+    Person pm = { "m-p3", 13 };
     delnm(&head, &pn, &pm);
     outPut("删除pn-pm(示例n-p3~m-p3)", head);
 

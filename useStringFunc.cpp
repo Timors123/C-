@@ -1,18 +1,15 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "head.h"
 
-int main()
-{
-    const char *originStr = "61Hello1World1C1BB1Aa1";
-    const char *addStr = "追加内容1";
+int main() {
+    const char* originStr = "61Hello1World1C1BB1Aa1";
+    const char* addStr = "追加内容1";
 
     // strlen 返回字符串长度,不包括\0
     int lenStr = strlen(originStr);
     int lenAddStr = strlen(addStr);
 
     // 申请空间
-    char *strPoint = (char *)malloc(100);
+    char* strPoint = (char*)malloc(100);
     // char *strPoint1 = (char *)malloc(100);
     // 申请失败关闭
     if (!strPoint)
@@ -48,12 +45,12 @@ int main()
     printf("%d\n", atoi(strPoint));
 
     // 后续strtok_r使用
-    char *strPoint_r = (char *)malloc(100);
+    char* strPoint_r = (char*)malloc(100);
     strcpy(strPoint_r, strPoint);
     strcat(strPoint_r, "strtok_s");
 
     // strtok 字符串切割(返回类型char *, 返回被分解的第一个子字符串，如果没有可检索的字符串，则返回一个空指针) : 按某个字符切割字符串
-    char **token = (char **)malloc(100);
+    char** token = (char**)malloc(100);
     // 默认静态指针
     token[0] = strtok(strPoint, "1");
     int i = 0;
@@ -79,9 +76,9 @@ int main()
     }
 
     // strtok_r 使用自定的指针char_r指向截取末尾(线程安全)
-    char **token_r = (char **)malloc(100);
+    char** token_r = (char**)malloc(100);
     // 自定指针
-    char *char_r;
+    char* char_r;
     int k = 0;
     token_r[k] = strtok_r(strPoint_r, "1", &char_r);
     while (token_r[k])
@@ -105,11 +102,18 @@ int main()
     memset(strPoint_r, 'C', 10);
     printf("memset后:%s\n", strPoint_r);
 
-    // sscanf_s 从一个字符串中读取数据,用于字符串输入时要求缓冲区大小参数，而在读取整数时不需要这些参数
+    // sscanf_s 从一个字符串中读取数据,用于字符串输入时要求缓冲区大小参数,而在读取整数时不需要这些参数,可用于字符串转数字
     int a, b, c;
     char sscan[50];
     sscanf_s("100 200 300 sscan", "%d %d %d %s", &a, &b, &c, &sscan, sizeof(sscan));
-    printf("输出:%d %d %d %s", a, b, c, sscan);
+    printf("输出:%d %d %d %s\n", a, b, c, sscan);
+
+    // sprintf 用于将格式化的数据写入字符串的函数,数字转字符串
+    char m[100];
+    sprintf(m, "%f", 12345.2112);
+    printf("%s\n", m);
+
+    // 字符->数字 'c'-'0' | 数字->字符 1+'0'
 
     free(strPoint);
     free(strPoint_r);

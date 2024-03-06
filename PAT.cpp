@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-#include <stdlib.h>
+#include "head.h"
 
 int P1001(int n) {
     int m = 0;
@@ -38,7 +35,29 @@ void P1002() {
     }
 }
 
+// NONE
+// 函数：检查字符串是否符合PAT规则
+int P1003(const char* str) {
+    int len = strlen(str);
+    int posP = -1, posT = -1;
+    int countP = 0, countT = 0;
+
+    // 遍历字符串，统计P、T的数量并记录它们的位置
+    for (int i = 0; i < len; i++) {
+        if (str[i] == 'P') { countP++; posP = i; } else if (str[i] == 'T') { countT++; posT = i; } else if (str[i] != 'A') return 0; // 包含除P、A、T之外的字符
+    }
+
+    // 确保P和T的数量均为1，且P在T之前
+    if (countP != 1 || countT != 1 || posT <= posP) return 0;
+
+    int a = posP; // P前面A的数量
+    int b = posT - posP - 1; // P和T之间A的数量
+    int c = len - posT - 1; // T后面A的数量
+    // 检查是否满足aPbTc => aPbATca规则
+    if (b > 0 && (c == a * b)) return 1; // b不能为0，且c必须等于a*b
+    return 0;
+}
+
 int main() {
 
-    P1002();
 }

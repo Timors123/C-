@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-#include <stdlib.h>
+#include "head.h"
 
 // 求平均值
 double avg(double* score) {
@@ -44,6 +41,5 @@ int* NumberOfDaffodils() {
 }
 
 int main() {
-    char* s = "s";
-    printf("%d", s[0] == '\0');
+
 }
