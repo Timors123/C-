@@ -9,36 +9,6 @@ typedef struct Person
     int height = 160; // 设置缺省值
 } Person;
 
-int getValue(char c)
-{
-    switch (c)
-    {
-    case 'I':
-        return 1;
-        break;
-    case 'V':
-        return 5;
-        break;
-    case 'X':
-        return 10;
-        break;
-    case 'L':
-        return 50;
-        break;
-    case 'C':
-        return 100;
-        break;
-    case 'D':
-        return 500;
-        break;
-    case 'M':
-        return 1000;
-        break;
-    default:
-        return 0;
-        break;
-    }
-}
 int main()
 {
     Person person0 = {"person0", 10};
