@@ -44,5 +44,6 @@ int* NumberOfDaffodils() {
 }
 
 int main() {
-
+    char* s = "s";
+    printf("%d", s[0] == '\0');
 }
