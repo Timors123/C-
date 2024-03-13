@@ -102,13 +102,14 @@ int main() {
     memset(strPoint_r, 'C', 10);
     printf("memset后:%s\n", strPoint_r);
 
-    // sscanf_s 从一个字符串中读取数据,用于字符串输入时要求缓冲区大小参数,而在读取整数时不需要这些参数,可用于字符串转数字
+    // sscanf_s 从一个字符串中读取数据,用于字符串输入时要求缓冲区大小参数,而在读取整数时不需要这些参数
+    //可用于字符串转数字(主要为可以提取部分数据),最终可以是数/符
     int a, b, c;
     char sscan[50];
-    sscanf_s("100 200 300 sscan", "%d %d %d %s", &a, &b, &c, &sscan, sizeof(sscan));
+    sscanf_s("100 200 300 sscan", "%d %d %d %s", &a, &b, &c, sscan, sizeof(sscan));
     printf("输出:%d %d %d %s\n", a, b, c, sscan);
 
-    // sprintf 用于将格式化的数据写入字符串的函数,数字转字符串
+    // sprintf 用于将格式化的数据写入字符串的函数,数字转字符串(主要用于格式化,如复制,追加,数符转换等),最终是个字符串
     char m[100];
     sprintf(m, "%f", 12345.2112);
     printf("%s\n", m);
