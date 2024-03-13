@@ -6,9 +6,7 @@
 int PointIsNULL(void* p) {
     // 指针为空,停止操作
     if (!p)
-    {
         return 1;
-    }
     return 0;
 };
 

@@ -7,64 +7,54 @@
 
 // [函数传 指针 参数]
 // (在做函数参数时)char *a 等价于 char a[]
-void func01(char *a)
-{
+void func01(char* a) {
     a[1] = 'F';
 }
 
-// ***[函数传 数组指针(二维数组) 参数]***
-// 返回数组指针(二维数组)-->两种方法
+// ***[函数传 数组指针(二维数组) 参数]*** 返回数组指针(二维数组)-->两种方法
 // 第一种 用typedef
-typedef int (*A)[3];
-A func020(A a)
-{
+typedef int(*A)[3];
+A func020(A a) {
     a[1][1] = 100;
     return a;
 }
 // 第二种 写法奇怪
-int (*func021(int (*a)[3]))[3]
-{
+int(*func021(int(*a)[3]))[3] {
     a[1][1] = 100;
     return a;
 }
+
 // 返回值不是数组指针
-int fuc02(int (*a)[3])
-{
+int fuc02(int(*a)[3]) {
 }
 
 // [函数传 指针数组 参数](数组内为非数组) 返回指针数组-->int **类型
-int **func03(int **a)
-{
+int** func03(int** a) {
     *a[1] = 700;
     return a;
 }
 
 // [函数传 指针数组 参数](数组内为数组)
-void func04(int **a)
-{
+void func04(int** a) {
     a[3][0] = 900;
 }
 
 // 函数指针数组
-int max(int a, int b)
-{
-    return a > b ?: a, b;
+int max(int a, int b) {
+    return a > b ? : a, b;
 }
-int add(int a, int b)
-{
+int add(int a, int b) {
     return a + b;
 }
-int sub(int a, int b)
-{
+int sub(int a, int b) {
     return a - b;
 }
 
 // 所有指针变量在64位上为8字节,32位上为4字节,但不能混着用,因为不同类型指针的操作权限不同,如char*只操作一个字节,只能位移一个字节
-int main()
-{
+int main() {
     // [间接指向字符串的指针] 字符串本质为数组,数组名即地址,%s可把字符串当作整体,自动寻址后续地址直到 \0 结束,%c需要用*寻址
     char c[] = "hello";
-    char *cp1 = c;
+    char* cp1 = c;
     // 可修改内部
     func01(cp1);
     // *(cp1 + 1) = 'x';
@@ -78,7 +68,7 @@ int main()
     }
 
     // [直接指向字符串的指针]
-    const char *cccp = "hello";
+    const char* cccp = "hello";
     printf("\n\n直接指向字符串的指针==%s\n", cccp); // 可读
     // *(cccp + 1) = 'x'; //不可改
     // printf("\n\n直接指向字符串的指针==%s", cccp);
@@ -86,7 +76,7 @@ int main()
     printf("直接指向字符串的指针==%s(重新赋值)", cccp); // 改的是整个字符串"hello",也就是重新赋值
 
     // [字符串数组](char类型 指针数组)
-    const char *ccp[] = {"hello", "name"};
+    const char* ccp[] = { "hello", "name" };
     printf("\n\n字符串数组第二个元素==%s\n", *(ccp + 1));
     // 改的是整个字符串"name",也就是重新赋值
     *(ccp + 1) = "nxme x";
@@ -94,12 +84,12 @@ int main()
 
     // 指向数组(首地址)的指针  数组首地址&a[0]=数组自身地址&a=指向该数组的指针的地址pa,但数组自身地址不等价数组首地址,步长不同
     // 如&a+1为下一个数组地址,步长为a的存储大小,&a[0]+1 或 pa+1 或 a+1为第二个元素a[1]地址
-    int a[] = {10, 20, 30, 40};
-    int *pa = a;
+    int a[] = { 10, 20, 30, 40 };
+    int* pa = a;
     printf("\n\n指向数组的指针==pa地址(指向数组a的首元素地址)：%p || 数组a的首地址：%p || 数组a的地址：%p || a的首元素元素：%d\n\n", pa, &a[0], &a, *pa);
     // 若想指向数组本身地址(&a) 需要二级指针(地址的地址)
     // 取地址后存入  地址的地址(对指针取地址&p)
-    int **ppa = &pa;
+    int** ppa = &pa;
     // printf("%p\n", &pa);
 
     // 指针数组 由多个已声明的指针组成的数组(数组内不是数组),数组名为整个数组地址,本质是数组
@@ -136,16 +126,16 @@ int main()
     // int *nps[] = {{100}, {200}, {300}};
 
     // [指针数组] 是个数组,有自己本身的地址,指针数组的数组名实质是一个指向数组的二级指针(即指向 由多个指针组成的数组 的地址)
-    int n1 = 100, n2 = 200, n3 = 300, k1[] = {111}, k2[] = {222}, k3[] = {333};
-    int *pn1 = &n1, *pn2 = &n2, *pn3 = &n3, *pk1 = k1, *pk2 = k2, *pk3 = k3; // 完整写法
-    int *nps[] = {
+    int n1 = 100, n2 = 200, n3 = 300, k1[] = { 111 }, k2[] = { 222 }, k3[] = { 333 };
+    int* pn1 = &n1, * pn2 = &n2, * pn3 = &n3, * pk1 = k1, * pk2 = k2, * pk3 = k3; // 完整写法
+    int* nps[] = {
         pn1,
         pn2,
         pn3,
         pk1,
         pk2,
-        pk3};
-    int **npss = func03(nps); // 改n2 返回-->int**类型
+        pk3 };
+    int** npss = func03(nps); // 改n2 返回-->int**类型
     func04(nps);              // 改k2[0] 无返回
     printf("指针数组====nps地址(数组自己的地址):%p ||首元素地址：%p || 首元素的值p1(n1的地址)：%p || n1地址：%p || n1的值:%d \n\n", &nps, nps, nps[0], &n1, *nps[0]);
     for (int i = 0; i < 3; i++)
@@ -161,7 +151,7 @@ int main()
     int b[][3] = {
         {00, 01, 02},
         {10, 11, 12},
-        {20, 21, 22}};
+        {20, 21, 22} };
     int(*pb)[3] = b;
     int(*pbb)[3] = func020(pb); // 改b[1][1] 11 为100
     printf("\n======二维数组======");
@@ -212,7 +202,9 @@ int main()
         p[0](20,30);     // 简写
     */
 
-    int (*pfs[])(int, int) = {max, add, sub};
+    int (*pfs[])(int, int) = { max, add, sub };
+    // 指向函数数组指针的指针 ( 当进行复杂指针声明时 对需要指向的变量的类型 加*并加括号 )
+    int(*(*ab)[])(int, int) = &pfs;
 
     printf("\n\n[函数指针数组] === max : %d || add : %d || sub : %d", pfs[0](20, 30), pfs[1](20, 30), (*(pfs + 2))(20, 30));
 
