@@ -6,7 +6,6 @@
 // 求平均值
 double avg(double* score) {
     double max = score[0], min = score[0], sum = 0, cout = 0;
-
     for (size_t i = 0; score[i] > 0; i++) {
         if (score[i] > max) {
             max = score[i];
@@ -78,43 +77,29 @@ int* NumberOfDaffodils(int n, int m) {
 void BubblingSort(int* n) {
     // int n[10] = { 15,197,23,107,44,55,12,875,59,11 };
     int flag;
-    for (size_t i = 0; i < 10 - 1; i++)
+    for (size_t i = 0; i < 10; i++)
     {
         flag = 0;
-        for (size_t j = 0; j < 10 - i - 1;j++)
-            ====== =
-            // 冒泡排序(优化)
-            void BubblingSort() {
-            int n[10] = { 15,197,23,107,44,55,12,875,59,11 };
-            int flag;
-            for (size_t i = 0; i < 10; i++)
+        for (size_t j = 0; j < 9 - i;j++)
+        {
+            if (n[j] > n[j + 1])
             {
-                flag = 0;
-                for (size_t j = 0; j < 9 - i;j++)
-                    >>>>>> > 839344d94f39f6945f4d7c00ff67a6df7c3d2c61
-                {
-                    if (n[j] > n[j + 1])
-                    {
-                        n[j] = n[j] + n[j + 1];
-                        n[j + 1] = n[j] - n[j + 1];
-                        n[j] = n[j] - n[j + 1];
-        <<<<<< < HEAD
-                        flag = 1;
-                    }
-                }
-                    if (!flag)
-                        ====== =
-                        flag++;
+                n[j] = n[j] + n[j + 1];
+                n[j + 1] = n[j] - n[j + 1];
+                n[j] = n[j] - n[j + 1];
+                flag = 1;
             }
         }
+        if (!flag)
+            flag++;
+
         if (flag == 0)
-            >>>>>> > 839344d94f39f6945f4d7c00ff67a6df7c3d2c61
             break;
-        for (size_t i = 0; i < 10; i++) {
-            printf("%d ", n[i]);
-        }
-        printf("\n");
     }
+    for (size_t i = 0; i < 10; i++) {
+        printf("%d ", n[i]);
+    }
+    printf("\n");
 }
 
 // 回文数
