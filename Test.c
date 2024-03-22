@@ -157,7 +157,7 @@ int Fibonaccii(int n) {
 }
 
 // 八皇后
-void EightQueen() {
+int EightQueen() {
     int queen[8] = { 0 };		//用来储存皇后的位置 即queen的值就为第i行的列
     //queen[0]表示第0行
     //queen[i]表示第i行
@@ -208,7 +208,7 @@ void EightQueen() {
 }
 
 void test() {
-
+    
 }
 
 int main() {
