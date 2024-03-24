@@ -207,7 +207,6 @@ int EightQueen() {
     printf("总共有%d种摆法\n", sum);
 }
 
-#include <stdio.h>
 #define MAX 500  // 定义最大长度
 
 // 大数阶乘
@@ -248,7 +247,7 @@ void factorial(int n) {
 }
 
 void test() {
-
+   
 }
 
 int main() {
