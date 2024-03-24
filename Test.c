@@ -248,7 +248,6 @@ void factorial(int n) {
 }
 
 void test() {
-   
 }
 
 int main() {
