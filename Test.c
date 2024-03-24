@@ -207,8 +207,48 @@ int EightQueen() {
     printf("总共有%d种摆法\n", sum);
 }
 
+#include <stdio.h>
+#define MAX 500  // 定义最大长度
+
+// 大数阶乘
+int multiply(int x, int res[], int res_size) {
+    int carry = 0;  // 初始化进位为0
+
+    // 一位一位地乘
+    for (int i = 0; i < res_size; i++) {
+        int prod = res[i] * x + carry;
+        res[i] = prod % 10;  // 存储乘积的个位数
+        carry = prod / 10;  // 更新进位
+    }
+
+    // 处理剩下的进位
+    while (carry) {
+        res[res_size] = carry % 10;
+        carry = carry / 10;
+        res_size++;
+    }
+
+    return res_size;
+}
+
+// 计算阶乘
+void factorial(int n) {
+    int res[MAX];
+    res[0] = 1;  // 初始化结果
+    int res_size = 1;
+
+    // 从 2 到 n，逐个乘到res上
+    for (int x = 2; x <= n; x++)
+        res_size = multiply(x, res, res_size);
+
+    printf("Factorial of %d: ", n);
+    for (int i = res_size - 1; i >= 0; i--)
+        printf("%d", res[i]);
+    printf("\n");
+}
+
 void test() {
-    
+    printf("%d", "1" == "1");
 }
 
 int main() {
