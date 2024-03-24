@@ -248,7 +248,7 @@ void factorial(int n) {
 }
 
 void test() {
-    printf("%d", "1" == "1");
+   
 }
 
 int main() {
